@@ -55,11 +55,9 @@ class Player(Object):
         self.n_att, self.n_def = self.n_att + 2, self.n_def + 2
     
     def set_wep(self, w):
-        # self.w_att = w if w > self.w_att else self.w_att
         self.w_att = w
     
     def set_def(self, d):
-        # self.w_def = d if d > self.w_def else self.w_def
         self.w_def = d
     
     def set_accessories(self, o):
@@ -130,6 +128,13 @@ class Player(Object):
     def down_trap(self):
         self.plus_hp( -1 if 'DX' in self.accessories else -5 )
         self.vaild_dead()
+
+    def show(self):
+        print(f"LV : {self.lv}")
+        print(f"HP : {self.hp}/{self.max_hp}")
+        print(f"ATT : {self.n_att}+{self.w_att}")
+        print(f"DEF : {self.n_def}+{self.w_def}")
+        print(f"EXP : {self.cur_exp}/{self.max_exp}")
     
     def __str__(self):
         return f"LV : {self.lv}\nHP : {self.hp}/{self.max_hp}\nATT : {self.n_att}+{self.w_att}\nDEF : {self.n_def}+{self.w_def}\nEXP : {self.cur_exp}/{self.max_exp}"
@@ -263,6 +268,21 @@ class Game:
                 result = "YOU WIN!"
                 return
     
+    def show(self):
+        global result
+        for y, objects in enumerate(self.map):
+            _grid = ""
+            for x, obj in enumerate(objects):
+                if y == self.player.y and x == self.player.x and not self.player.is_dead:
+                    _grid += "@"
+                else:
+                    _grid += REVERSE_TYPE[obj.type]
+            print(_grid)
+        
+        print(f"Passed Turns : {self.now_turn}")
+        self.player.show()
+        print(result)
+    
     def __str__(self):
         _result = ""
         for y, objects in enumerate(self.map):
@@ -281,6 +301,4 @@ N, M = input().split(' ')
 N, M = int(N), int(M)
 _game = Game(N, M)
 _game.turn()
-
-_str = str(_game) + '\n' + result
-print(_str)
+_game.show()
