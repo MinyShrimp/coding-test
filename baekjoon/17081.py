@@ -1,41 +1,7 @@
 # RPG EXTREME
-# INPUT
-# 7 8
-## . : 빈공간
-## # : 벽
-## B : 아이템 - W(무기) A(방어구) O(장신구)
-## & : 몬스터 - y, x, name, atk, def, hp, exp
-## ^ : 가시 함정 ( 체력 -5 )
-## M : 보스몬스터 - y, x, name, atk, def, hp, exp
-# .&....&.
-# ..B.&..&
-# B...&...
-# .B@.B#..
-# .&....M.
-# .B...B..
-# ..B^^&..
-# RRRUULLULUDDDLDRDRDRRRURRULUULLU
-# 3 5 One 4 2 10 3
-# 2 5 Two 10 2 8 3
-# 1 2 Three 20 2 14 7
-# 5 2 Four 16 2 16 5
-# 7 6 Five 16 5 16 12
-# 5 7 Boss 2 9 20 2
-# 1 7 EO 20 1 1 4
-# 2 8 ET 10 5 4 10
-# 4 5 W 4
-# 2 3 O CO
-# 3 1 A 10
-# 4 2 A 2
-# 6 2 O DX
-# 7 3 O HU
-# 6 6 W 3
-
 ## START 2022-05-01 17:58
 ## PAUSE 18:38 ~ 19:00
 ## END   2022-05-01 22:28
-
-from copy import deepcopy
 
 TYPE = {
     "." : "NONE",
@@ -73,7 +39,7 @@ class BossKillError(Exception): pass
 class Player(Object):
     def __init__(self, y, x, type):
         super().__init__( y, x, type )
-        self.start_y, self.start_x = deepcopy(y), deepcopy(x)
+        self.start_y, self.start_x = y, x
         self.lv, self.hp, self.max_hp, self.cur_exp, self.max_exp = 1, 20, 20, 0, 5
         self.n_att, self.w_att, self.n_def, self.w_def, self.is_dead = 2, 0, 2, 0, False
         self.accessories = []
